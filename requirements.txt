@@ -97,7 +97,7 @@ kiwisolver==1.4.5
 langchain==0.0.236
 langsmith==0.0.10
 lomond==0.3.3
-lxml @ file:///private/tmp/python-lxml-20230830-6138-1l0cdh0/lxml-4.9.3
+lxml
 markdown-it-py==3.0.0
 MarkupSafe==2.1.3
 marshmallow==3.20.1
