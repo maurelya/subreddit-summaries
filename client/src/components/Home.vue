@@ -15,7 +15,7 @@
       <input v-model="email" type="email" placeholder="Enter your email" /><br>
 
       <span>Enter the subreddit</span><br>
-      <input v-model="subreddit" type="subreddit" placeholder="Enter the subreddit" /><br>
+      <input v-model="subreddit" type="text" placeholder="Enter the subreddit" /><br>
 
       <input class="submit" type="submit" value="Submit">
     </form>
@@ -30,6 +30,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   data() {
     return {
@@ -40,9 +41,17 @@ export default {
     };
   },
   methods: {
-    submitForm: function () {
+    submitForm(submitEvent) {
+
       this.formSubmitted = true
-      axios.post('/submit', form.data)
+      const data = JSON.stringify({ name: this.name, email: this.email, subreddit: this.subreddit })
+      const customConfig = {
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      };
+
+      axios.post('http://127.0.0.1:5000/submit', data, customConfig)
         .then((response) => {
           // Success
         })

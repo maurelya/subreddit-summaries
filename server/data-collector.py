@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import requests
 from flask import Flask
-from database import Users, Posts
+from server.models.users import Users, Posts
 
 
 app = Flask(__name__)

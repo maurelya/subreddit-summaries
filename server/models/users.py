@@ -1,0 +1,32 @@
+#!/usr/bin/env python3
+from sqlalchemy_utils import EmailType
+from init import db
+
+
+
+class Users(db.Model):
+    id = db.Column('user_id', db.Integer, primary_key = True)
+    name = db.Column(db.String(100))
+    email = db.Column(EmailType)
+    subreddit = db.Column(db.String(100))
+
+    def __init__(self, name, email, subreddit):
+        self.name = name
+        self.email = email
+        self.subreddit = subreddit
+
+
+# User methods
+
+def add_user_record(new_record):
+    db.session.add(new_record)
+    db.session.commit()
+
+def get_all_user_records():
+   Users.query.all()
+
+def get_user_by_email(email):
+    Users.query.filter_by(email = email).all()
+
+def get_user_by_id(id):
+    Users.query.filter_by(user_id = id).all()
