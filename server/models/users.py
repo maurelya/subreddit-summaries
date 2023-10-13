@@ -23,10 +23,10 @@ def add_user_record(new_record):
     db.session.commit()
 
 def get_all_user_records():
-   Users.query.all()
+   return Users.query.all()
 
 def get_user_by_email(email):
-    Users.query.filter_by(email = email).all()
+    return Users.query(Users).filter_by(email = email).all()
 
 def get_user_by_id(id):
-    Users.query.filter_by(user_id = id).all()
+    return Users.query(Users).filter_by(user_id = id).all()

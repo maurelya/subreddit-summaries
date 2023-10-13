@@ -20,10 +20,8 @@ def collect_summarized_posts():
     # Query all rows in the `users` table
     users = get_all_user_records()
 
-    print('users: ', json.dumps(users, indent=4))
-
-    #for user in users:
-        
+    for user in users:
+        print('user: ', user)
         
 
 '''

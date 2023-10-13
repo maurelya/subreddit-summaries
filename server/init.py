@@ -1,6 +1,4 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-from sqlalchemy.orm import sessionmaker
 
 db = SQLAlchemy()
 
@@ -16,9 +14,4 @@ def setup_db(app):
     with app.app_context():
         db.init_app(app)
         db.create_all()
-
-def get_sql_session():
-    engine = create_engine(get_database_path())
-    new_session = sessionmaker(bind=engine)
-    return new_session()
 
