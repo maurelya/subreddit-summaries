@@ -3,10 +3,7 @@ import json
 import requests
 from flask import Flask
 from models.users import Users, get_all_user_records
-
-
-
-
+from scrape_reddit import scrape_subreddit
 
 app = Flask(__name__)
 
@@ -21,7 +18,9 @@ def collect_summarized_posts():
     users = get_all_user_records()
 
     for user in users:
-        print('user: ', user)
+        
+        subreddit = user.subreddit
+        scrape_subreddit(subreddit)
         
 
 '''

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from sqlalchemy_utils import EmailType
-from init import db
+from init_db import db
 
 
 

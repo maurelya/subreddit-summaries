@@ -1,4 +1,4 @@
-from init import db
+from init_db import db
 
 class Posts(db.Model):
     id = db.Column('post_id', db.Integer, primary_key=True)
@@ -20,10 +20,10 @@ def add_post_record(new_record):
     db.session.commit()
 
 def get_all_post_records():
-    Posts.query.all()
+    return Posts.query.all()
 
 def get_post_by_user(id):
-    Posts.query.filter_by(user_id = id).all()
+    return Posts.query.filter_by(user_id = id).all()
 
 def get_post_by_id(id):
-    Posts.query.filter_by(post_id = id).all()
+    return Posts.query.filter_by(post_id = id).all()

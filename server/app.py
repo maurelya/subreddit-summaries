@@ -5,7 +5,7 @@ from flask_cors import CORS
 from flask import Flask, request
 from data_collector import collect_summarized_posts
 from models.users import add_user_record, Users
-from init import setup_db
+from server.init_db import setup_db
 from models.posts import Posts, add_post_record
 
 
