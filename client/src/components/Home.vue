@@ -41,7 +41,7 @@ export default {
     };
   },
   methods: {
-    submitForm(submitEvent) {
+    submitForm() {
 
       this.formSubmitted = true
       const data = JSON.stringify({ name: this.name, email: this.email, subreddit: this.subreddit })
@@ -51,12 +51,14 @@ export default {
         }
       };
 
-      axios.post('http://127.0.0.1:5000/submit', data, customConfig)
+      axios.post('http://127.0.0.1:5000/add-user', data, customConfig)
         .then((response) => {
           // Success
+          console.log(`Successfully added a new user with status ${JSON.stringify(response.status)}`)
         })
         .catch((error) => {
           // Error
+          console.log(`Error while adding a new user: ${error}`)
         });
     }
   },

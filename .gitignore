@@ -1,3 +1,5 @@
 /venv
 .DS_Store
-/server/__pycache__
+/server/__pycache__/
+/server//models/__pycache__
+/server/instance

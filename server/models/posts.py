@@ -2,7 +2,7 @@ from init import db
 
 class Posts(db.Model):
     id = db.Column('post_id', db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('user_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     title = db.Column(db.String(50))
     body_summary = db.Column(db.Text)
     top_comment_summary =  db.Column(db.Text)
