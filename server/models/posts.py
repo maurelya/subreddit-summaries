@@ -1,6 +1,14 @@
+from dataclasses import dataclass
 from init_db import db
 
+@dataclass
 class Posts(db.Model):
+    id: int
+    user_id: int
+    title: str
+    body_summary: str
+    top_comment_summary: str
+
     id = db.Column('post_id', db.Integer, primary_key=True)
     user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
     title = db.Column(db.String(50))
