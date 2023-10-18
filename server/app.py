@@ -5,7 +5,7 @@ from flask_cors import CORS
 from flask import Flask, request
 from data_collector import collect_summarized_posts
 from models.users import add_user_record, Users
-from server.init_db import setup_db
+from init_db import setup_db
 from models.posts import Posts, add_post_record
 
 
@@ -28,7 +28,6 @@ def add_user():
         content = request.get_json()
         new_user = Users(name = content['name'], email = content['email'], subreddit = content['subreddit'])
         add_user_record(new_user)
-        collect_summarized_posts()
         return 'OK'
     except Exception as e:
         print("Encounter error in /add-user api:", e)
@@ -46,4 +45,14 @@ def add_post():
         return 'OK'
     except Exception as e:
         print("Encounter error in /add-post api:", e)
+        return 'Not OK'
+    
+# gell all posts
+@app.route('/get-all-posts', methods=['GET'])
+def get_all_posts():
+    try:
+        collect_summarized_posts()
+        return 'OK'
+    except Exception as e:
+        print("Encounter error in /get-all-posts api:", e)
         return 'Not OK'
