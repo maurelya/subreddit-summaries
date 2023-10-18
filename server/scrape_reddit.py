@@ -1,56 +1,39 @@
 import pandas as pd
 import praw
-from gologin import GoLogin
-from selenium.webdriver import Chrome
+from selenium import webdriver
+from selenium.webdriver.chrome.options import Options
+import os
 
+praw_clientsecret = os.environ['PRAW_CLIENT_SECRET']
+praw_clientid = os.environ['PRAW_CLIENT_ID']
+reddit = ""
 
-# Set up a GoLogin profile
-gl = GoLogin({
-"token": "yU0token",
-})
-
-def setup_golin():
-    print("setup_golin \n")
-    profile_id = gl.create({
-        "name":"my-profile",
-        "browser_executable_path": "/path/to/chrome.exe",
-        "user_agent": "my-user-agent",
-        "proxy": {
-        "server": "my-proxy-server",
-        "port": 1234,
-        "username": "my-username",
-        "password": "my-password"
-        }
-    })
-    return gl.getProfile(profile_id)
-
-def get_golin_webdriver():
-    print("get_golin_webdriver \n")
-    driver = setup_golin().get_webdriver("my-profile", Chrome)
-    return driver
-
+options = Options()
+options.add_argument("--headless=new")
+driver = webdriver.Chrome(options=options)
 
 def setup_praw():
-    print("setup_praw \n")
-    user_agent = "Scraper 1.0 by /u/python_engineer"
+    print("Setting up PRAW \n")
+    user_agent = "Scraper 1.0 by /u/reddit_summarizer"
 
+
+    global reddit   
     reddit = praw.Reddit(
-    client_id="****",
-    client_secret="****",
-    user_agent=user_agent,
-    webdriver=get_golin_webdriver()
+        client_id = praw_clientid,
+        client_secret = praw_clientsecret,
+        user_agent=user_agent,
+        webdriver=driver
     )
-    return reddit
 
 def scrape_subreddit(subreddit):
-    print("scrape_subreddit \n")
+    print("Generating subreddit headlines dataframe. \n")
     headlines = set ( )
-    reddit = setup_praw()
 
     for submission in reddit.subreddit(subreddit).hot(limit=3):
         headlines.add(submission.title)
-        print(len(headlines))
+        print(submission.title)
 
     df = pd.DataFrame(headlines)
 
+    driver.quit()
     return df

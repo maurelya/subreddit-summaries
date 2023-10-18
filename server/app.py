@@ -7,12 +7,14 @@ from data_collector import collect_summarized_posts
 from models.users import add_user_record, Users
 from init_db import setup_db
 from models.posts import Posts, add_post_record
+from scrape_reddit import setup_praw
 
 
 app = Flask(__name__)
 
 
 setup_db(app)
+setup_praw()
 
 if __name__ == '__main__':
     app.run(host='localhost', port=5000)
