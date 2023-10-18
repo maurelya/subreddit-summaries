@@ -4,19 +4,24 @@
 
 1. Fork/Clone
 
-1. Run the server-side Flask app in one terminal window:
-
+2. Project Setup
     ```sh
-    $ cd server
+    $ export FLASK_APP=src/app.py
     $ python3 -m venv env
     $ source venv/bin/activate
+    ```
+
+3. Run the server-side Flask app in one terminal window:
+
+    ```sh
+    (env)$ cd server
     (env)$ pip install -r requirements.txt
     (env)$ flask run --debug
     ```
 
     Navigate to [http://localhost:5000](http://localhost:5000)
 
-1. Run the client-side Vue app in a different terminal window:
+4. Run the client-side Vue app in a different terminal window:
 
     ```sh
     $ cd client
