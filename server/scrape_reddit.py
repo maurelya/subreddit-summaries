@@ -10,6 +10,7 @@ gl = GoLogin({
 })
 
 def setup_golin():
+    print("setup_golin \n")
     profile_id = gl.create({
         "name":"my-profile",
         "browser_executable_path": "/path/to/chrome.exe",
@@ -24,11 +25,13 @@ def setup_golin():
     return gl.getProfile(profile_id)
 
 def get_golin_webdriver():
+    print("get_golin_webdriver \n")
     driver = setup_golin().get_webdriver("my-profile", Chrome)
     return driver
 
 
 def setup_praw():
+    print("setup_praw \n")
     user_agent = "Scraper 1.0 by /u/python_engineer"
 
     reddit = praw.Reddit(
@@ -40,6 +43,7 @@ def setup_praw():
     return reddit
 
 def scrape_subreddit(subreddit):
+    print("scrape_subreddit \n")
     headlines = set ( )
     reddit = setup_praw()
 
