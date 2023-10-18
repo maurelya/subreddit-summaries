@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import json
 import requests
-from flask import Flask
+from flask import Flask, jsonify
 from models.users import Users, get_all_user_records
 from scrape_reddit import scrape_subreddit
 
@@ -16,11 +16,17 @@ using API
 def collect_summarized_posts():
     # Query all rows in the `users` table
     users = get_all_user_records()
+    
 
     for user in users:
+        print(user)
+        try:
+            df = scrape_subreddit(user.subreddit)
+            print(df)
+        except Exception as error:
+            print("An exception occurred:", error)
         
-        subreddit = user.subreddit
-        scrape_subreddit(subreddit)
+    
         
 
 '''
@@ -44,7 +50,7 @@ function to add a new post.
 '''
 
 def add_summarized_post():
-    new_entry = Users(name=name, email=email)
+    new_entry = Users(name = name, email = email)
 
 
 '''
