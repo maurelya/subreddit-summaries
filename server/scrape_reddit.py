@@ -1,4 +1,3 @@
-import pandas as pd
 import praw
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -27,13 +26,16 @@ def setup_praw():
 
 def scrape_subreddit(subreddit):
     print("Generating subreddit headlines dataframe. \n")
-    headlines = set ( )
+    submission_list = []
 
-    for submission in reddit.subreddit(subreddit).hot(limit=3):
-        headlines.add(submission.title)
-        print(submission.title)
+    for submission in reddit.subreddit(subreddit).hot(limit=1):
+        post_obj = {'post_title': submission.title,
+                    'post_body': submission.selftext, 
+                    'top_comment': submission.comments[0].body,
+                    'created_utc': submission.created_utc,
+                    'url': submission.url}
+        submission_list.append(post_obj)
 
-    df = pd.DataFrame(headlines)
 
     driver.quit()
-    return df
+    return submission_list[0]
