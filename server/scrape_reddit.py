@@ -24,18 +24,24 @@ def setup_praw():
         webdriver=driver
     )
 
+def close_driver():
+    driver.close()
+    driver.quit()
+
 def scrape_subreddit(subreddit):
-    print("Generating subreddit headlines dataframe. \n")
+    print("Generating post object. \n")
     submission_list = []
 
-    for submission in reddit.subreddit(subreddit).hot(limit=1):
-        post_obj = {'post_title': submission.title,
-                    'post_body': submission.selftext, 
-                    'top_comment': submission.comments[0].body,
-                    'created_utc': submission.created_utc,
-                    'url': submission.url}
-        submission_list.append(post_obj)
+    for submission in reddit.subreddit(subreddit).top(limit=3):
+
+        if(not submission.stickied):
+            post_obj = {'post_title': submission.title,
+                        'post_body': submission.selftext, 
+                        'top_comment': submission.comments[0].body,
+                        'created_utc': submission.created_utc,
+                        'url': submission.url}
+
+            submission_list.append(post_obj)
 
 
-    driver.quit()
     return submission_list[0]
