@@ -6,9 +6,8 @@ from flask import Flask, request
 from data_collector import collect_all_posts
 from models.users import add_user_record, Users
 from init_db import setup_db
-from models.posts import Posts, add_post_record, update_post_record
+from models.posts import Posts, add_post_record
 from scrape_reddit import setup_praw
-import json
 
 
 app = Flask(__name__)
@@ -57,7 +56,7 @@ def get_all_posts():
 def add_post():
     try:
         content = request.get_json()
-        print(json.dumps(content, indent = 4))
+
         new_post = Posts(user_id = content['user_id'],
                         title = content['title'],
                         subreddit = content["subreddit"],
@@ -65,25 +64,11 @@ def add_post():
                         top_comment = content["top_comment"],
                         created_utc = content["created_utc"],
                         url = content["url"],
-                        top_post_body_summary = content['top_post_body_summary'],
-                        top_comment_summary= content['top_comment_summary'])
+                        top_post_summary = content['top_post_summary'],
+                        summary_sentiment = content['summary_sentiment'])
         
         add_post_record(new_post)
         return 'OK'
     except Exception as e:
         print("Encounter error in /add-post api:", e)
-        return 'Not OK'
-    
-# update post with watsonx.ai generate summaries
-@app.route('/update_post', methods=['POST'])
-def update_post():
-    try:
-        content = request.get_json()
-        print(json.dumps(content, indent = 4))
-        update_post_record(content['user_id'], 
-                           content['top_post_body_summary'], 
-                           content['top_comment_summary'])
-        return 'OK'
-    except Exception as e:
-        print("Encounter error in /update_post:", e)
         return 'Not OK'
