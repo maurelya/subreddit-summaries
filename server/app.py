@@ -10,7 +10,7 @@ from database.main.models.posts import Posts, add_post_record
 from reddit.main.scrape_reddit import setup_praw
 from database.main.models.users import Users, add_user_record
 from server.healthcheck.main.healthcheck import health
-
+from prometheus_flask_exporter import PrometheusMetrics
 
 app = Flask(__name__)
 
@@ -18,9 +18,10 @@ app = Flask(__name__)
 setup_db(app)
 setup_praw()
 
-
+metrics = PrometheusMetrics(app)
 if __name__ == '__main__':
-    app.run(host='localhost', port=5000)
+
+    app.run(host='localhost', port=27000)
 
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
@@ -31,6 +32,7 @@ app.add_url_rule("/healthcheck", "healthcheck", view_func=lambda: health.run())
 
 
 # add a new user to the User table
+@metrics.gauge('add_new_user', 'add a new user to the User table')
 @app.route('/add-user', methods=['POST'])
 def add_user():
     try:
