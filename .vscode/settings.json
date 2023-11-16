@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./server/database/main",
+        "./server/database/main/models"
+    ]
+}

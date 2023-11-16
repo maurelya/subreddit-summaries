@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
 import requests
 from flask import Flask
-from models.users import get_all_user_records
-from scrape_reddit import scrape_subreddit
-from watsonx_ai import sentiment_analysis, summarize_post
+
+from reddit.main.scrape_reddit import scrape_subreddit
+from database.main.models.users import get_all_user_records
+from watsonx.main.watsonx_ai import sentiment_analysis, summarize_post
 
 app = Flask(__name__)
 

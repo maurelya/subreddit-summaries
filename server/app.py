@@ -3,11 +3,12 @@
 from flask import Flask
 from flask_cors import CORS
 from flask import Flask, request
-from data_collector import collect_all_posts
-from models.users import add_user_record, Users
-from init_db import setup_db
-from models.posts import Posts, add_post_record
-from scrape_reddit import setup_praw
+from datacollector.main.data_collector import collect_all_posts
+
+from database.main.init_db import setup_db
+from database.main.models.posts import Posts, add_post_record
+from reddit.main.scrape_reddit import setup_praw
+from database.main.models.users import Users, add_user_record
 
 
 app = Flask(__name__)

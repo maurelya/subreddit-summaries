@@ -6,7 +6,7 @@
 
 2. Project Setup
     ```sh
-    $ export FLASK_APP=src/app.py
+    $ export FLASK_APP=server/app.py
     $ python3 -m venv env
     $ source venv/bin/activate
     ```
@@ -14,7 +14,6 @@
 3. Run the server-side Flask app in one terminal window:
 
     ```sh
-    (env)$ cd server
     (env)$ pip install -r requirements.txt
     (env)$ flask run --debug
     ```

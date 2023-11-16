@@ -1,0 +1,30 @@
+{
+  "name": "subreddit-summaries",
+  "version": "1.0.0",
+  "description": "## Want to use this project?",
+  "main": "index.js",
+  "scripts": {
+    "dev": "flask run --debug",
+    "install": "pip install -r requirements.txt",
+    "test": "npm run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/maurelya/subreddit-summaries.git"
+  },
+  "keywords": [
+    "praw",
+    "python",
+    "watsonx",
+    "reddit"
+  ],
+  "author": "Maurely Acosta",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/maurelya/subreddit-summaries/issues"
+  },
+  "homepage": "https://github.com/maurelya/subreddit-summaries#readme",
+  "dependencies": {
+    "prettier": "^3.1.0"
+  }
+}

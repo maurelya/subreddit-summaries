@@ -3,6 +3,8 @@
 /server/__pycache__
 /server/models/__pycache__
 /server/instance
+node_modules
+package-lock.json
 
 *.pyc
 .env
