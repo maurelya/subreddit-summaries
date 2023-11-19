@@ -10,3 +10,5 @@ env
 *.pyc
 .env
 *.sqlite3
+
+.pytest_cache

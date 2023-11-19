@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import Flask
+from flask import Flask, render_template
 from flask_cors import CORS
 from flask import Flask, request
 from datacollector.main.data_collector import collect_all_posts
@@ -26,42 +26,47 @@ if __name__ == '__main__':
 # enable CORS
 CORS(app, resources={r'/*': {'origins': '*'}})
 
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
 # get app health check data
 app.add_url_rule("/healthcheck", "healthcheck", view_func=lambda: health.run())
 
 
-
 # add a new user to the User table
 @metrics.gauge('add_new_user', 'add a new user to the User table')
-@app.route('/add-user', methods=['POST'])
+@app.route('/add_user', methods=['POST'])
 def add_user():
     try:
-        content = request.get_json()
-        new_user = Users(name = content['name'],
-                        email = content['email'],
-                        subreddit = content['subreddit'])
+        name = request.form['name']
+        email = request.form['email']
+        subreddit = request.form['subreddit']
+        new_user = Users(name, email, subreddit)
         
         add_user_record(new_user)
         return 'OK'
     except Exception as e:
-        print("Encounter error in /add-user api:", e)
+        print("Encounter error in /add_user api:", e)
         return 'Not OK'
     
 
     
 # gell all posts and comments from reddit
-@app.route('/get-all-posts', methods=['GET'])
+@app.route('/get_all_posts', methods=['GET'])
 def get_all_posts():
     try:
         collect_all_posts()
         return 'OK'
     except Exception as e:
-        print("Encounter error in /get-all-posts api:", e)
+        print("Encounter error in /get_all_posts api:", e)
         return 'Not OK'
     
 
 # add a new post to Post table
-@app.route('/add-post', methods=['POST'])
+@app.route('/add_post', methods=['POST'])
 def add_post():
     try:
         content = request.get_json()
@@ -79,5 +84,5 @@ def add_post():
         add_post_record(new_post)
         return 'OK'
     except Exception as e:
-        print("Encounter error in /add-post api:", e)
+        print("Encounter error in /add_post api:", e)
         return 'Not OK'
