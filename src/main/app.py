@@ -1,11 +1,13 @@
 #!/usr/bin/env python3
 
+import json
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask import Flask, request
 
 
 from prometheus_flask_exporter import PrometheusMetrics
+from main.sendgrid.sendgrid import generate_email
 
 from src.main.database.init_db import setup_db
 from src.main.database.models.posts import Posts, add_post_record
@@ -87,4 +89,23 @@ def add_post():
         return 'OK'
     except Exception as e:
         print("Encounter error in /add_post api:", e)
+        return 'Not OK'
+    
+# send email
+@app.route('/send_email', methods=['POST'])
+def send_email():
+    try:
+        content = request.get_json()
+        print("content: ", json.dumps(content, indent=4))
+
+        email = content['email']
+        subreddit = content['subreddit']
+        post_summary = content['post_summary']
+        post_url = content['post_url']
+        emotion = content['emotion']
+
+        generate_email(email, subreddit,post_summary, post_url, emotion)
+        return 'OK'
+    except Exception as e:
+        print("Encounter error in /send_email api:", e)
         return 'Not OK'
