@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from dataclasses import dataclass
 from sqlalchemy_utils import EmailType
-from database.main.init_db import db
+from src.main.database.init_db import db
 
 
 @dataclass

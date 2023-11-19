@@ -6,26 +6,17 @@
 
 2. Project Setup
     ```sh
-    $ export FLASK_APP=server/app.py
+    $ export FLASK_APP=src/app.py
     $ python3 -m venv env
     $ source venv/bin/activate
     ```
 
-3. Run the server-side Flask app in one terminal window:
+3. Run the Flask app:
 
     ```sh
     (env)$ pip install -r requirements.txt
     (env)$ flask run --debug
     ```
 
-    Navigate to [http://localhost:5000](http://localhost:5000)
+    Navigate to [http://localhost:2700](http://localhost:2700)
 
-4. Run the client-side Vue app in a different terminal window:
-
-    ```sh
-    $ cd client
-    $ npm install
-    $ npm run dev
-    ```
-
-    Navigate to [http://localhost:5173](http://localhost:5173)

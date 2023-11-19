@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from database.main.init_db import db
+from src.main.database.init_db import db
 
 @dataclass
 class Posts(db.Model):

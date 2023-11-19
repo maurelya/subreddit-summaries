@@ -2,7 +2,7 @@ import os
 from ibm_watson_machine_learning.foundation_models import Model
 from ibm_watson_machine_learning.metanames import GenTextParamsMetaNames as GenParams
 
-from watsonx.main.emotions import get_emotion_list
+from src.main.watsonx.emotions import get_emotion_list
 
 # API key you created
 ibm_api_key = os.environ['IBM_API_KEY']

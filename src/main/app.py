@@ -3,14 +3,16 @@
 from flask import Flask, render_template
 from flask_cors import CORS
 from flask import Flask, request
-from datacollector.main.data_collector import collect_all_posts
 
-from database.main.init_db import setup_db
-from database.main.models.posts import Posts, add_post_record
-from reddit.main.scrape_reddit import setup_praw
-from database.main.models.users import Users, add_user_record
-from server.healthcheck.main.healthcheck import health
+
 from prometheus_flask_exporter import PrometheusMetrics
+
+from src.main.database.init_db import setup_db
+from src.main.database.models.posts import Posts, add_post_record
+from src.main.database.models.users import Users, add_user_record
+from src.main.datacollector.data_collector import collect_all_posts
+from src.main.reddit.scrape_reddit import setup_praw
+from src.main.healthcheck.healthcheck import health
 
 app = Flask(__name__)
 

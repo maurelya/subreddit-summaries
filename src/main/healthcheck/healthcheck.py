@@ -1,6 +1,6 @@
 import sqlite3
 from healthcheck import HealthCheck
-from database.main.init_db import db
+from src.main.database.init_db import db
 
 
 health = HealthCheck()

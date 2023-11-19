@@ -2,9 +2,9 @@
 import requests
 from flask import Flask
 
-from reddit.main.scrape_reddit import scrape_subreddit
-from database.main.models.users import get_all_user_records
-from watsonx.main.watsonx_ai import sentiment_analysis, summarize_post
+from src.main.reddit.scrape_reddit import scrape_subreddit
+from src.main.database.models.users import get_all_user_records
+from src.main.watsonx.watsonx_ai import sentiment_analysis, summarize_post
 
 app = Flask(__name__)
 
