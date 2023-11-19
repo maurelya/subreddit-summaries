@@ -20,15 +20,6 @@ jobs:
           cache: 'pip' 
       - name: Install dependencies
         run: pip install -r requirements.txt
-      - name: Create .env file
-        run: |
-          echo "PRAW_CLIENT_ID=${{ secrets.PRAW_CLIENT_ID }}" >> .env
-          echo "PRAW_CLIENT_SECRET=${{ secrets.PRAW_CLIENT_SECRET }}" >> .env
-          echo "IBM_CLOUD_URL=${{ secrets.IBM_CLOUD_URL }}" >> .env
-          echo "WATSONX_PROJECT_ID=${{ secrets.WATSONX_PROJECT_ID }}" >> .env
-          echo "IBM_API_KEY=${{ secrets.IBM_API_KEY }}" >> .env
-      - name: Run .env file
-        run: source .env
       #- name: Run pytest
 
   deploy:
@@ -40,3 +31,9 @@ jobs:
         with:
           service-id: ${{ secrets.RENDER_SERVICE_ID }}
           api-key: ${{ secrets.RENDER_API_KEY }}
+        env: 
+          IBM_API_KEY: ${{ secrets.IBM_API_KEY }}
+          WATSONX_PROJECT_ID: ${{ secrets.WATSONX_PROJECT_ID }}
+          IBM_CLOUD_URL: ${{ secrets.IBM_CLOUD_URL }}
+          PRAW_CLIENT_SECRET: ${{ secrets.PRAW_CLIENT_SECRET }}
+          PRAW_CLIENT_ID: ${{ secrets.PRAW_CLIENT_ID }}
