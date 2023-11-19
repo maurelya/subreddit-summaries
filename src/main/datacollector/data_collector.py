@@ -40,7 +40,7 @@ def collect_all_posts():
                     'top_post_summary': summary,
                     'summary_sentiment': summary_sentiment}
         
-            response = requests.post("http://127.0.0.1:5000/add-post", json = body)
+            response = requests.post("/add_post", json = body)
             print(response)
           
         
