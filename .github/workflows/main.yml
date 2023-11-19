@@ -27,6 +27,7 @@ jobs:
           echo "IBM_CLOUD_URL=${{ secrets.IBM_CLOUD_URL }}" >> .env
           echo "WATSONX_PROJECT_ID=${{ secrets.WATSONX_PROJECT_ID }}" >> .env
           echo "IBM_API_KEY=${{ secrets.IBM_API_KEY }}" >> .env
+          cat .env
       #- name: Run pytest
 
   deploy:
