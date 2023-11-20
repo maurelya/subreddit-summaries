@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 from flask import Flask
-from main.email.sendgrid import generate_email
+from src.main.email.sendgrid import generate_email
 from src.main.database.models.posts import get_recent_post
 
 

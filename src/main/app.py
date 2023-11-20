@@ -7,9 +7,9 @@ from flask import Flask, request
 
 
 from prometheus_flask_exporter import PrometheusMetrics
-from main.email.email import send_emails
-from main.email.sendgrid import generate_email
-from main.event_collaboration.rabbitmq import connect_rabbitmq
+from src.main.email.email import send_emails
+from src.main.email.sendgrid import generate_email
+from src.main.event_collaboration.rabbitmq import connect_rabbitmq
 
 from src.main.database.init_db import setup_db
 from src.main.database.models.posts import Posts, add_post_record

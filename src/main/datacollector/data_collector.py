@@ -2,7 +2,7 @@
 import json
 import requests
 from flask import Flask, request
-from main.event_collaboration.rabbitmq import get_channel
+from src.main.event_collaboration.rabbitmq import get_channel
 
 from src.main.reddit.scrape_reddit import scrape_subreddit
 from src.main.database.models.users import get_all_user_records
