@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import json, pika
+import os
 
 '''
 Establish a connection to a RabbitMQ server.
@@ -10,7 +11,10 @@ a different machine.
 channel = ""
 def connect_rabbitmq():
     print("Connecting to rabbitmq")
-    conn = pika.BlockingConnection(pika.ConnectionParameters("localhost"))
+    url = os.environ.get('CLOUDAMQP_URL', 'amqp://guest:guest@localhost:5672/%2f')
+    params = pika.URLParameters(url)
+    params.socket_timeout = 5
+    conn = pika.BlockingConnection(params)    
     global channel
     channel = conn.channel()
 
