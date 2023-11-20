@@ -7,7 +7,9 @@ from flask import Flask, request
 
 
 from prometheus_flask_exporter import PrometheusMetrics
-from main.sendgrid.sendgrid import generate_email
+from main.email.email import send_emails
+from main.email.sendgrid import generate_email
+from main.event_collaboration.rabbitmq import connect_rabbitmq
 
 from src.main.database.init_db import setup_db
 from src.main.database.models.posts import Posts, add_post_record
@@ -21,10 +23,11 @@ app = Flask(__name__)
 
 setup_db(app)
 setup_praw()
+connect_rabbitmq()
 
 metrics = PrometheusMetrics(app)
 if __name__ == '__main__':
-
+    
     app.run(host='localhost', port=27000)
 
 # enable CORS
@@ -67,7 +70,7 @@ def get_all_posts():
     except Exception as e:
         print("Encounter error in /get_all_posts api:", e)
         return 'Not OK'
-    
+       
 
 # add a new post to Post table
 @app.route('/add_post', methods=['POST'])
@@ -91,7 +94,7 @@ def add_post():
         print("Encounter error in /add_post api:", e)
         return 'Not OK'
     
-# send email
+# send a single email
 @app.route('/send_email', methods=['POST'])
 def send_email():
     try:
@@ -108,4 +111,14 @@ def send_email():
         return 'OK'
     except Exception as e:
         print("Encounter error in /send_email api:", e)
+        return 'Not OK'
+
+# send all emails
+@app.route('/send_all_emails', methods=['GET'])
+def send_all_emails():
+    try:
+        send_emails()
+        return 'OK'
+    except Exception as e:
+        print("Encounter error in /send_emails api:", e)
         return 'Not OK'

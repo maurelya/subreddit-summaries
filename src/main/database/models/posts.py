@@ -63,5 +63,8 @@ def get_all_post_records():
 def get_post_by_user(id):
     return Posts.query.filter_by(user_id = id).all()
 
+def get_recent_post(id):
+    return Posts.query.filter_by(user_id = id).order_by(Posts.created_utc).first()
+
 def get_post_by_id(id):
     return Posts.query.filter_by(post_id = id).all()
