@@ -5,7 +5,7 @@ import os
 
 import requests
 
-from main.email.sendgrid import generate_email
+from src.main.email.sendgrid import generate_email
 
 '''
 Establish a connection to a RabbitMQ server.

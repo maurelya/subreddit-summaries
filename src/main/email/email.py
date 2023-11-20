@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import json
 from flask import Flask
-from main.event_collaboration.rabbitmq import get_channel
+from src.main.event_collaboration.rabbitmq import get_channel
 from src.main.email.sendgrid import generate_email
 from src.main.database.models.posts import get_recent_post
 
