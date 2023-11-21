@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
 import json
-import requests
-from flask import Flask, request
+from flask import Flask
 from src.main.event_collaboration.rabbitmq import consume_summarized_posts, get_channel
 
 from src.main.reddit.scrape_reddit import scrape_subreddit
-from src.main.database.models.users import get_all_user_records
+from src.main.database.models.user import get_all_user_records
 from src.main.watsonx.watsonx_ai import sentiment_analysis, summarize_post
 
 app = Flask(__name__)

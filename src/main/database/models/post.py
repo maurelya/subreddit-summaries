@@ -15,7 +15,7 @@ class Post(db.Model):
     summary_sentiment: str
 
     id = db.Column('post_id', db.Integer, primary_key=True)
-    user_id = db.Column(db.Integer, db.ForeignKey('users.user_id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('user.user_id'))
     title = db.Column(db.String(100))
     subreddit = db.Column(db.String(100))
     top_post_body = db.Column(db.Text)

@@ -12,8 +12,8 @@ from src.main.email.sendgrid import generate_email
 from src.main.event_collaboration.rabbitmq import connect_rabbitmq, consume_emails, consume_summarized_posts
 
 from src.main.database.init_db import setup_db
-from src.main.database.models.posts import Posts, add_post_record
-from src.main.database.models.users import Users, add_user_record
+from src.main.database.models.post import Post, add_post_record
+from src.main.database.models.user import User, add_user_record
 from src.main.datacollector.data_collector import collect_all_posts
 from src.main.reddit.scrape_reddit import setup_praw
 from src.main.healthcheck.healthcheck import health
@@ -51,7 +51,7 @@ def add_user():
         name = request.form['name']
         email = request.form['email']
         subreddit = request.form['subreddit']
-        new_user = Users(name, email, subreddit)
+        new_user = User(name, email, subreddit)
         
         add_user_record(new_user)
         return 'OK'
@@ -78,7 +78,7 @@ def add_post():
     try:
         content = request.get_json()
 
-        new_post = Posts(user_id = content['user_id'],
+        new_post = Post(user_id = content['user_id'],
                         title = content['title'],
                         subreddit = content["subreddit"],
                         top_post_body = content['top_post_body'],

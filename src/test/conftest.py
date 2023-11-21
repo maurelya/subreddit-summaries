@@ -1,12 +1,12 @@
 import pytest
 from src.main.app import app
-from src.test.config import config
+from src.test.config import TestingConfig
 from src.main.database.init_db import db
-from user import User
+from src.main.database.models.user import User
 
 @pytest.fixture
 def client():
-    app.config.from_object(config.TestingConfig)
+    app.config.from_object(TestingConfig)
     with app.test_client() as client:
         with app.app_context():
             yield client

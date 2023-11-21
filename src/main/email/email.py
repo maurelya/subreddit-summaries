@@ -2,11 +2,10 @@
 import json
 from flask import Flask
 from src.main.event_collaboration.rabbitmq import get_channel
-from src.main.email.sendgrid import generate_email
-from src.main.database.models.posts import get_recent_post
+from src.main.database.models.post import get_recent_post
 
 
-from src.main.database.models.users import get_all_user_records
+from src.main.database.models.user import get_all_user_records
 
 
 app = Flask(__name__)

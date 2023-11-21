@@ -1,6 +1,4 @@
 import json
-from src.main.app import app
-
 
 def test_landing_page(client):
     landing = client.get('/')
