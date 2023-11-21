@@ -19,7 +19,7 @@ from src.main.reddit.scrape_reddit import setup_praw
 from src.main.healthcheck.healthcheck import health
 
 app = Flask(__name__)
-
+app.testing = True
 
 
 setup_db(app)
