@@ -2,7 +2,7 @@ from dataclasses import dataclass
 from src.main.database.init_db import db
 
 @dataclass
-class Posts(db.Model):
+class Post(db.Model):
     id: int
     user_id: int
     subreddit: str
@@ -58,13 +58,13 @@ def update_post_record(id, top_post_body):
     db.session.commit()
 
 def get_all_post_records():
-    return Posts.query.all()
+    return Post.query.all()
 
 def get_post_by_user(id):
-    return Posts.query.filter_by(user_id = id).all()
+    return Post.query.filter_by(user_id = id).all()
 
 def get_recent_post(id):
-    return Posts.query.filter_by(user_id = id).order_by(Posts.created_utc).first()
+    return Post.query.filter_by(user_id = id).order_by(Post.created_utc).first()
 
 def get_post_by_id(id):
-    return Posts.query.filter_by(post_id = id).all()
+    return Post.query.filter_by(post_id = id).all()

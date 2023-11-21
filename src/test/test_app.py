@@ -1,14 +1,6 @@
 import json
-import pytest
 from src.main.app import app
 
-app.testing = True
-
-
-@pytest.fixture()
-def client():
-    client = app.test_client()
-    yield client
 
 def test_landing_page(client):
     landing = client.get('/')

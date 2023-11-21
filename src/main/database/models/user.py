@@ -5,7 +5,7 @@ from src.main.database.init_db import db
 
 
 @dataclass
-class Users(db.Model):
+class User(db.Model):
     id: int
     name: str
     email: str
@@ -31,10 +31,10 @@ def add_user_record(new_record):
     
 
 def get_all_user_records():
-   return Users.query.all()
+   return User.query.all()
 
 def get_user_by_email(email):
-    return Users.query(Users).filter_by(email = email).all()
+    return User.query(User).filter_by(email = email).all()
 
 def get_user_by_id(id):
-    return Users.query(Users).filter_by(user_id = id).all()
+    return User.query(User).filter_by(user_id = id).all()

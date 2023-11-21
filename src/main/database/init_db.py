@@ -1,8 +1,9 @@
+import os
 from flask_sqlalchemy import SQLAlchemy
 
 db = SQLAlchemy()
 
-database_path = 'sqlite:///subreddit-summarizer.sqlite3'
+database_path = os.environ.get("DB_PATH")
 
 
 def get_database_path():
