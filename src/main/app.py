@@ -9,7 +9,7 @@ from flask import Flask, request
 from prometheus_flask_exporter import PrometheusMetrics
 from src.main.email.email import send_emails
 from src.main.email.sendgrid import generate_email
-from src.main.event_collaboration.rabbitmq import connect_rabbitmq, consume_emails, consume_summarized_posts
+from src.main.event_collaboration.rabbitmq import connect_rabbitmq, consume_all_emails, consume_summarized_posts
 
 from src.main.database.init_db import setup_db
 from src.main.database.models.post import Post, add_post_record
@@ -133,12 +133,21 @@ def send_all_emails():
         return 'Not OK'
     
 # consume all messages on the queue
-@app.route('/rabbitmq_consume', methods=['GET'])
-def rabbitmq_consume():
+@app.route('/consume_posts', methods=['GET'])
+def consume_posts():
     try:
         consume_summarized_posts()
-        consume_emails()
         return 'OK'
     except Exception as e:
-        print("Encounter error in /rabbitmq_consume api:", e)
+        print("Encounter error in /consume_posts api:", e)
+        return 'Not OK'
+    
+# consume all messages on the queue
+@app.route('/consume_emails', methods=['GET'])
+def consume_emails():
+    try:
+        consume_all_emails()
+        return 'OK'
+    except Exception as e:
+        print("Encounter error in /consume_all_emails api:", e)
         return 'Not OK'

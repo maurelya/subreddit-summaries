@@ -38,31 +38,44 @@ def connect_rabbitmq():
 
 
 
-def summarized_posts_callback(ch, method, properties, body):
-    body = json.loads(body)
-    print(" [x] Received %r" % body)
-    response = requests.post( 'http://' + request.host + "/add_post", json = body)
-    print(response)
+def summarized_posts_callback(body):
+    print('Recieved with body: ', json.dumps(body, indent=4))
+    url = 'http://' + request.host + "/add_post"
+    print(" add post url %r" % url)
+    response = requests.post( url, json = body)
+    print("response: ", response)
 
 
 
 def consume_summarized_posts():
     print("Consuming summarized posts")
-    channel.basic_consume(queue='summarized_posts', on_message_callback=summarized_posts_callback, auto_ack=True)
 
-    channel.basic_cancel('summarized_posts')
+    for message in channel.consume("summarized_posts", inactivity_timeout=1):
+            if message == (None, None, None):
+                 break
+            body = message
+            
+            json_body = json.loads(body[2])
+            
+            summarized_posts_callback(json_body)
 
 
-def emails_callback(ch, method, properties, body):
-    body = json.loads(body)
-    print(" [x] Received %r" % body)
-    generate_email(body.email, body.subreddit, body.top_post_summary, body.url, body.summary_sentiment)
+def emails_callback(body):
+    print('Recieved with body: ', json.dumps(body, indent=4))
+    
+    generate_email(body['email'], body['subreddit'], body['top_post_summary'], body['url'], body['summary_sentiment'])
 
-def consume_emails():
+def consume_all_emails():
     print("Consuming emails")
-    channel.basic_consume(queue='emails', on_message_callback=emails_callback, auto_ack=True)
 
-    channel.basic_cancel('emails')
+    for message in channel.consume("emails", inactivity_timeout=1):
+            if message == (None, None, None):
+                 break
+            body = message
+            
+            json_body = json.loads(body[2])
+            
+            emails_callback(json_body)
     
 
 def get_channel():

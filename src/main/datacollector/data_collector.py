@@ -44,8 +44,7 @@ def collect_all_posts():
             
             channel.basic_publish(exchange="", routing_key="summarized_posts",
                       body=json.dumps(body))
-            
-        consume_summarized_posts()   
+               
 
     except Exception as error:
             print("An exception occurred:", error)
