@@ -13,7 +13,7 @@ from src.main.event_collaboration.rabbitmq import connect_rabbitmq, consume_emai
 
 from src.main.database.init_db import setup_db
 from src.main.database.models.post import Post, add_post_record
-from src.main.database.models.user import User, add_user_record
+from src.main.database.models.user import User, add_user_record, get_all_user_records
 from src.main.datacollector.data_collector import collect_all_posts
 from src.main.reddit.scrape_reddit import setup_praw
 from src.main.healthcheck.healthcheck import health
@@ -45,7 +45,7 @@ app.add_url_rule("/healthcheck", "healthcheck", view_func=lambda: health.run())
 
 # add a new user to the User table
 @metrics.gauge('add_new_user', 'add a new user to the User table')
-@app.route('/add_user', methods=['POST'])
+@app.route('/add_new_user', methods=['POST'])
 def add_user():
     try:
         name = request.form['name']
@@ -56,9 +56,18 @@ def add_user():
         add_user_record(new_user)
         return 'OK'
     except Exception as e:
-        print("Encounter error in /add_user api:", e)
+        print("Encounter error in /add_new_user api:", e)
         return 'Not OK'
     
+# add a new user to the User table
+@metrics.gauge('get_all_users', 'get all users in User table')
+@app.route('/get_all_users', methods=['GET'])
+def get_all_users():
+    try:
+        return get_all_user_records()
+    except Exception as e:
+        print("Encounter error in /get_all_users api:", e)
+        return 'Not OK'
 
     
 # gell all posts and comments from reddit

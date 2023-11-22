@@ -12,7 +12,7 @@ def client():
             yield client
 
 
-#tests/conftest.py
+
 @pytest.fixture()
 def init_database():
 
@@ -34,7 +34,6 @@ def init_database():
 
     db.session.commit()
 
-    yield db 
-    
-    db.session.close()  
+    yield db  
+    db.session.remove()  
     db.drop_all()
