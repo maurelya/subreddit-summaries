@@ -13,7 +13,7 @@ localhost means we are connecting to the local
 machine. However we can provide a IP address to
 a different machine.
 '''
-channel = ""
+
 
 def get_rabbitmq_conn():
     print("Get rabbitmq connection")
@@ -26,7 +26,7 @@ def get_rabbitmq_conn():
 def connect_rabbitmq():
     print("Connecting to rabbitmq")
     conn = get_rabbitmq_conn()  
-    global channel
+
     channel = conn.channel()
 
     print("Created emails queue")
@@ -38,17 +38,20 @@ def connect_rabbitmq():
 
 
 
-def summarized_posts_callback(body):
+def summarized_posts_callback(channel, method_frame, body):
+    
     print('Recieved with body: ', json.dumps(body, indent=4))
     url = 'http://' + request.host + "/add_post"
     print(" add post url %r" % url)
     response = requests.post( url, json = body)
     print("response: ", response)
+    channel.basic_ack(method_frame.delivery_tag)
 
 
 
 def consume_summarized_posts():
     print("Consuming summarized posts")
+    channel = get_channel()
 
     for message in channel.consume("summarized_posts", inactivity_timeout=1):
             if message == (None, None, None):
@@ -56,17 +59,20 @@ def consume_summarized_posts():
             body = message
             
             json_body = json.loads(body[2])
+            method_frame = body[0]
             
-            summarized_posts_callback(json_body)
+            summarized_posts_callback(channel, method_frame, json_body)
 
 
-def emails_callback(body):
+def emails_callback(channel, method_frame, body):
     print('Recieved with body: ', json.dumps(body, indent=4))
     
     generate_email(body['email'], body['subreddit'], body['top_post_summary'], body['url'], body['summary_sentiment'])
+    channel.basic_ack(method_frame.delivery_tag)
 
 def consume_all_emails():
     print("Consuming emails")
+    channel = get_channel()
 
     for message in channel.consume("emails", inactivity_timeout=1):
             if message == (None, None, None):
@@ -74,8 +80,9 @@ def consume_all_emails():
             body = message
             
             json_body = json.loads(body[2])
+            method_frame = body[0]
             
-            emails_callback(json_body)
+            emails_callback(channel, method_frame, json_body)
     
 
 def get_channel():

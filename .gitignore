@@ -2,7 +2,7 @@
 .DS_Store
 /src/__pycache__
 /src/main/models/__pycache__
-/src/instance
+/src/main/instance
 node_modules
 package-lock.json
 env
