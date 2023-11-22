@@ -28,6 +28,10 @@ jobs:
             PRAW_CLIENT_SECRET: ${{ secrets.PRAW_CLIENT_SECRET }}
             PRAW_CLIENT_ID: ${{ secrets.PRAW_CLIENT_ID }}
             DB_PATH: ${{secrets.DB_PATH}}
+            SENDGRID_API_KEY: ${{secrets.SENDGRID_API_KEY}}
+            FROM_EMAIL: ${{secrets.FROM_EMAIL}}
+            TEMPLATE_ID: ${{secrets.TEMPLATE_ID}}
+            CLOUDAMQP_URL: ${{secrets.CLOUDAMQP_URL}}
             PYTHONPATH: .
         run: pytest
 
