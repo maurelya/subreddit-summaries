@@ -27,6 +27,7 @@ jobs:
             IBM_CLOUD_URL: ${{ secrets.IBM_CLOUD_URL }}
             PRAW_CLIENT_SECRET: ${{ secrets.PRAW_CLIENT_SECRET }}
             PRAW_CLIENT_ID: ${{ secrets.PRAW_CLIENT_ID }}
+            DB_PATH: ${{secrets.DB_PATH}}
             PYTHONPATH: .
         run: pytest
 
